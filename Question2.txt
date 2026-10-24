@@ -1,0 +1,28 @@
+Question Titel: creat a project folder structure
+
+Question link:
+https://my.newtonschool.co/playground/code/jipp2htnvrww?lecture_hash=v210chxjexei
+
+solution:
+
+chmod +x create-service
+cat << 'EOF' > create-service
+mkdir -p service/controllers
+mkdir -p service/models
+mkdir -p service/routes
+mkdir -p service/middleware
+echo "API Service" > service/README.md
+echo 'console.log("Server started");' > service/server.js
+EOF
+./create-service
+
+ Approch:
+ first i give the permission of "+x"
+  for reading input ues "cat"
+  for taking input of all commond without excution as a plain text by " << 'EOF  "
+  
+  for all plaintext named by                       "> create-service"
+  we create default perent directiory service by   " -p service/ "
+  than we also ues with perent directory           "echo"
+  last we write to end of that                     "EOF"
+  than we call for excution                        ./create-service
