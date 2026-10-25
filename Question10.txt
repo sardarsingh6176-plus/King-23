@@ -1,0 +1,19 @@
+Question titel: The Internship Project Setup     
+
+Question link: https://my.newtonschool.co/playground/code/5i36axzh7cl2?lecture_hash=mi7y4g3am46y
+
+
+Solution:
+
+cd client-app
+git init
+echo "hii" > index.html
+echo "hii" > app.js
+git add index.html app.js
+git commit -m "Initial client files"
+git remote add origin "https://github.com/startup/client-app.git"
+git push -u origin main
+git log
+
+ first  commond                   git remote add origin "URL"
+ second commond                   git push -u origin main
