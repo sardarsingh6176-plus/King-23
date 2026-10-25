@@ -1,0 +1,19 @@
+Question titel:   API-Service Directory Workflow  
+
+Question link:
+https://my.newtonschool.co/playground/code/5ypni48t3pzs
+
+
+Solution:
+
+cd api-service
+git init
+git add README.md
+git commit -m "Add documentation"
+git add server.js routes.js package.json
+git commit -m "Add server files"
+git status
+git log
+
+git log for getting for check commit and id
+git status for checking which one is tracking or which one file is not tracking.
