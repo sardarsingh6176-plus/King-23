@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8fafc">
+  <title>ContribScout — Find your first open-source issue</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['DM Sans','sans-serif'], display: ['Manrope','sans-serif'] }, colors: { ink:'#0F172A', muted:'#334155', indigo:'#4F46E5', emerald:'#10B981' } } } }
+  </script>
+  <style>
+    :root{--page:#F8FAFC;--card:#FFFFFF;--ink:#0F172A;--body:#334155;--line:#E2E8F0;--soft:#F1F5F9}
+    *{box-sizing:border-box}body{background:var(--page);color:var(--ink);font-family:'DM Sans',sans-serif}
+    .display{font-family:'Manrope',sans-serif}.glass{background:rgba(255,255,255,.82);backdrop-filter:blur(18px);border-bottom:1px solid rgba(226,232,240,.8)}
+    .card{background:var(--card);border:1px solid var(--line);box-shadow:0 3px 14px rgba(15,23,42,.035);transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+    .issue-card:hover{transform:translateY(-4px);box-shadow:0 18px 38px rgba(15,23,42,.08);border-color:#c7d2fe}
+    .skill{border:1px solid #CBD5E1;background:#fff;color:#475569;transition:.18s}
+    .skill.active{background:#EEF2FF;border-color:#A5B4FC;color:#4338CA;box-shadow:inset 0 0 0 1px #C7D2FE}
+    .btn-primary{background:#4F46E5;color:#fff;box-shadow:0 5px 12px rgba(79,70,229,.18);transition:.2s}
+    .btn-primary:hover{background:#4338CA;transform:translateY(-1px)}
+    .skeleton{background:linear-gradient(90deg,#F1F5F9 25%,#E2E8F0 38%,#F1F5F9 62%);background-size:400% 100%;animation:shine 1.35s ease infinite}
+    @keyframes shine{0%{background-position:100% 0}100%{background-position:0 0}}
+    .drawer{transform:translateX(105%);transition:transform .32s cubic-bezier(.2,.8,.2,1)}.drawer.open{transform:translateX(0)}
+    .overlay{opacity:0;pointer-events:none;transition:opacity .25s}.overlay.open{opacity:1;pointer-events:auto}
+    .pearl{--page:#F1F5F9;--card:#FCFDFE;--line:#CBD5E1;--soft:#E8EEF5}
+    .focus-ring:focus-visible{outline:3px solid #A5B4FC;outline-offset:3px}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body class="antialiased">
+  <header class="glass sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 h-[70px] flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-indigo-600 text-white grid place-items-center shadow-md shadow-indigo-200"><i data-lucide="git-pull-request" class="w-5 h-5"></i></div>
+        <div><div class="display font-extrabold tracking-tight text-[17px]">ContribScout<span class="text-indigo-600">.</span></div><div class="text-[10px] text-slate-500 -mt-0.5 tracking-wide">YOUR FIRST PR STARTS HERE</div></div>
+      </a>
+      <div class="hidden md:flex items-center gap-2 text-xs text-slate-500">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" id="statusDot"></span>
+        <span id="statusText">Checking local Ollama…</span><span class="text-slate-300">/</span>
+        <span class="font-semibold text-slate-700">Engine: Google Gemma</span><span class="text-slate-400">(gemma2:2b · Local Ollama)</span>
+        <span class="rounded-full bg-slate-100 px-2 py-1 text-slate-600" id="latency">— ms</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <button id="pearlToggle" class="focus-ring hidden sm:flex items-center gap-2 text-xs font-semibold text-slate-600 px-3 py-2 rounded-lg hover:bg-slate-100"><i data-lucide="sun" class="w-4 h-4"></i> Pearl mode</button>
+        <a href="https://github.com" target="_blank" rel="noreferrer" class="focus-ring text-slate-500 hover:text-indigo-600"><i data-lucide="github" class="w-5 h-5"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-5 lg:px-8 pb-20">
+    <section class="pt-12 md:pt-[68px] pb-8">
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1.5 text-[11px] font-bold tracking-wide text-indigo-700 mb-5"><span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span> OPEN SOURCE, MADE APPROACHABLE</div>
+        <h1 class="display text-[38px] sm:text-[52px] leading-[1.08] font-extrabold tracking-[-.045em] text-slate-900">Your next contribution<br class="hidden sm:block"> is <span class="text-indigo-600">closer than you think.</span></h1>
+        <p class="mt-5 text-[15px] sm:text-base leading-7 text-slate-600 max-w-2xl">Tell us what you know. Gemma turns real, beginner-friendly GitHub issues into clear next steps — so you can go from curious to contribution-ready.</p>
+      </div>
+    </section>
+
+    <section class="card rounded-2xl p-5 md:p-6 mb-7">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+        <div><h2 class="display font-bold text-slate-900">Build your contributor profile</h2><p class="text-xs text-slate-500 mt-1">Choose the skills you have — or type your own.</p></div>
+        <div class="flex items-center gap-2 text-xs text-slate-500"><i data-lucide="sparkles" class="w-4 h-4 text-indigo-500"></i> Personalized issue matching</div>
+      </div>
+      <div class="flex flex-wrap gap-2 mb-4" id="skillPills">
+        <button class="skill active rounded-full px-3.5 py-2 text-xs font-semibold" data-skill="Python">Python</button>
+        <button class="skill rounded-full px-3.5 py-2 text-xs font-semibold" data-skill="React">React</button>
+        <button class="skill rounded-full px-3.5 py-2 text-xs font-semibold" data-skill="FastAPI">FastAPI</button>
+        <button class="skill rounded-full px-3.5 py-2 text-xs font-semibold" data-skill="C++">C++</button>
+        <button class="skill rounded-full px-3.5 py-2 text-xs font-semibold" data-skill="Tailwind">Tailwind</button>
+        <button class="skill rounded-full px-3.5 py-2 text-xs font-semibold" data-skill="Bug Fix">Bug Fix</button>
+        <button class="skill rounded-full px-3.5 py-2 text-xs font-semibold" data-skill="Docs">Docs</button>
+        <button class="skill rounded-full px-3.5 py-2 text-xs font-semibold" data-skill="JavaScript">JavaScript</button>
+        <button class="skill rounded-full px-3.5 py-2 text-xs font-semibold" data-skill="CSS">CSS</button>
+        <button class="skill rounded-full px-3.5 py-2 text-xs font-semibold" data-skill="Testing">Testing</button>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <div class="flex-1 flex gap-2">
+          <input id="customSkill" aria-label="Add a custom skill" placeholder="Add a skill (e.g. SQL, accessibility)" class="focus-ring min-w-0 flex-1 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none focus:border-indigo-300 focus:bg-white">
+          <button id="addSkill" class="focus-ring rounded-xl border border-slate-200 px-4 text-sm font-semibold text-slate-600 hover:bg-slate-50">Add</button>
+        </div>
+        <select id="level" class="focus-ring rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none"><option>Beginner</option><option>Intermediate</option></select>
+        <button id="findBtn" class="btn-primary focus-ring rounded-xl px-6 py-3 text-sm font-bold flex items-center justify-center gap-2"><i data-lucide="search" class="w-4 h-4"></i> Find my issues</button>
+      </div>
+      <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+        <p class="text-[11px] text-slate-400 flex items-center gap-1.5"><i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Live results are checked for open, unassigned and recently updated status.</p>
+        <button id="curatedBtn" class="focus-ring text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1.5"><i data-lucide="database" class="w-3.5 h-3.5"></i> Load Curated Live Dataset <span class="font-normal text-slate-400">(demo fallback)</span></button>
+      </div>
+    </section>
+
+    <section class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8" aria-label="Search metrics">
+      <div class="card rounded-2xl p-5"><div class="flex items-center justify-between"><span class="text-xs font-semibold text-slate-500">Issues scanned</span><span class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 grid place-items-center"><i data-lucide="scan-search" class="w-4 h-4"></i></span></div><div id="scanned" class="display text-3xl font-extrabold tracking-tight mt-3">—</div><div class="text-[11px] text-slate-400 mt-1">GitHub search results checked</div></div>
+      <div class="card rounded-2xl p-5"><div class="flex items-center justify-between"><span class="text-xs font-semibold text-slate-500">Stale / taken filtered</span><span class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 grid place-items-center"><i data-lucide="filter" class="w-4 h-4"></i></span></div><div id="filtered" class="display text-3xl font-extrabold tracking-tight mt-3">—</div><div class="text-[11px] text-slate-400 mt-1">Assigned, closed or inactive</div></div>
+      <div class="card rounded-2xl p-5"><div class="flex items-center justify-between"><span class="text-xs font-semibold text-slate-500">High-match issues</span><span class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 grid place-items-center"><i data-lucide="target" class="w-4 h-4"></i></span></div><div id="highMatch" class="display text-3xl font-extrabold tracking-tight mt-3">—</div><div class="text-[11px] text-slate-400 mt-1">85% match score and above</div></div>
+    </section>
+
+    <section>
+      <div class="flex flex-wrap items-end justify-between gap-3 mb-4">
+        <div><div class="text-[11px] uppercase tracking-[.16em] font-bold text-indigo-600 mb-1">Your shortlist</div><h2 class="display text-2xl font-extrabold tracking-tight text-slate-900">Issues worth exploring</h2></div>
+        <div id="resultMeta" class="text-xs text-slate-500">Start by selecting your skills above.</div>
+      </div>
+      <div id="notice" class="hidden rounded-xl border px-4 py-3 text-sm mb-4"></div>
+      <div id="issuesGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="card rounded-2xl p-7 lg:col-span-2 text-center"><div class="mx-auto w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 grid place-items-center mb-3"><i data-lucide="compass" class="w-6 h-6"></i></div><h3 class="font-bold text-slate-800">A good first issue is one click away</h3><p class="text-sm text-slate-500 mt-1">Choose your skills, then let Gemma help you find a place to start.</p></div>
+      </div>
+    </section>
+    <footer class="mt-16 pt-6 border-t border-slate-200 flex flex-col sm:flex-row justify-between gap-2 text-[11px] text-slate-400"><span>Built for Hacktoberfest Hack Day · Track 2: Best Use of Gemma</span><span>Open source contribution, one clear step at a time.</span></footer>
+  </main>
+
+  <div id="overlay" class="overlay fixed inset-0 bg-slate-950/25 z-40" aria-hidden="true"></div>
+  <aside id="drawer" class="drawer fixed right-0 top-0 h-full w-full sm:max-w-xl bg-white z-50 shadow-2xl overflow-y-auto" aria-label="Issue deep dive" aria-hidden="true">
+    <div class="sticky top-0 bg-white/90 backdrop-blur border-b border-slate-100 px-6 py-4 flex items-center justify-between z-10"><div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-indigo-600"><i data-lucide="book-open-check" class="w-4 h-4"></i> Contributor deep dive</div><button id="closeDrawer" class="focus-ring rounded-lg p-2 text-slate-500 hover:bg-slate-100" aria-label="Close panel"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+    <div id="drawerContent" class="p-6"></div>
+  </aside>
+
+<script>
+const selectedSkills = new Set(['Python']);
+let currentIssues = [];
+const $ = (id) => document.getElementById(id);
+const escapeHtml = (value='') => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function icons(){ if(window.lucide) lucide.createIcons(); }
+function addSkill(name){
+  const clean = name.trim().slice(0,40); if(!clean) return;
+  selectedSkills.add(clean);
+  const existing = [...$('skillPills').children].find(b => b.dataset.skill.toLowerCase()===clean.toLowerCase());
+  if(existing){existing.classList.add('active');return;}
+  const btn=document.createElement('button');btn.className='skill active rounded-full px-3.5 py-2 text-xs font-semibold';btn.dataset.skill=clean;btn.textContent=clean;$('skillPills').appendChild(btn);
+}
+$('skillPills').addEventListener('click', e=>{const b=e.target.closest('[data-skill]');if(!b)return;const s=b.dataset.skill;if(selectedSkills.has(s)){selectedSkills.delete(s);b.classList.remove('active')}else{selectedSkills.add(s);b.classList.add('active')}});
+$('addSkill').addEventListener('click',()=>{addSkill($('customSkill').value);$('customSkill').value=''});
+$('customSkill').addEventListener('keydown',e=>{if(e.key==='Enter'){$('addSkill').click()}});
+$('pearlToggle').addEventListener('click',()=>{document.body.classList.toggle('pearl');$('pearlToggle').innerHTML=document.body.classList.contains('pearl')?'<i data-lucide="sun-moon" class="w-4 h-4"></i> Pearl mode on':'<i data-lucide="sun" class="w-4 h-4"></i> Pearl mode';icons()});
+
+function showNotice(message, kind='info'){
+  const n=$('notice');n.className='rounded-xl border px-4 py-3 text-sm mb-4 '+(kind==='error'?'border-rose-200 bg-rose-50 text-rose-800':'border-indigo-100 bg-indigo-50 text-indigo-800');n.textContent=message;n.classList.remove('hidden');
+}
+function skeletons(){
+  $('issuesGrid').innerHTML=Array.from({length:4},()=>`<div class="card rounded-2xl p-5"><div class="flex gap-2 mb-5"><div class="skeleton h-5 w-24 rounded-full"></div><div class="skeleton h-5 w-20 rounded-full"></div></div><div class="skeleton h-6 w-4/5 rounded mb-3"></div><div class="skeleton h-4 w-full rounded mb-2"></div><div class="skeleton h-4 w-2/3 rounded mb-6"></div><div class="skeleton h-20 rounded-xl mb-4"></div><div class="skeleton h-9 w-36 rounded-lg"></div></div>`).join('');
+}
+function scoreStyle(score){return score>=85?'bg-emerald-50 text-emerald-700 border-emerald-100':score>=60?'bg-amber-50 text-amber-700 border-amber-100':'bg-slate-100 text-slate-600 border-slate-200'}
+function renderIssues(issues){
+  currentIssues=issues;
+  if(!issues.length){$('issuesGrid').innerHTML='<div class="card rounded-2xl p-8 text-center lg:col-span-2"><p class="font-bold text-slate-800">No matching issues this time.</p><p class="text-sm text-slate-500 mt-1">Try adding a broader skill or load the curated demo dataset.</p></div>';return}
+  $('issuesGrid').innerHTML=issues.map((x,i)=>{
+    const a=x.analysis||{}, score=Number(a.match_score||0);
+    const labels=(x.labels||[]).slice(0,4).map(l=>`<span class="rounded-md px-2 py-1 text-[10px] font-semibold bg-slate-100 text-slate-600">${escapeHtml(l.name)}</span>`).join('');
+    const verified=x.source==='curated'?'<span class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold text-slate-600"><i data-lucide="database" class="w-3 h-3"></i> Curated demo data</span>':'<span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold text-emerald-700"><i data-lucide="shield-check" class="w-3 h-3"></i> Verified Open &amp; Unassigned</span>';
+    return `<article class="card issue-card rounded-2xl p-5 md:p-6 flex flex-col" data-index="${i}">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-4">${verified}<span class="rounded-full border px-2.5 py-1 text-[10px] font-extrabold ${scoreStyle(score)}">${score}% skill match</span></div>
+      <div class="text-[11px] font-semibold text-slate-400 mb-1">${escapeHtml(x.repository)} <span class="text-slate-300">/</span> #${escapeHtml(x.number)}</div>
+      <h3 class="display text-[17px] leading-6 font-extrabold text-slate-900">${escapeHtml(x.title)}</h3>
+      <p class="text-[13px] leading-6 text-slate-600 mt-3 line-clamp-3">${escapeHtml(a.jargon_buster||x.body)}</p>
+      <div class="flex flex-wrap gap-1.5 mt-4">${labels}</div>
+      <div class="mt-5 rounded-xl bg-slate-50 border border-slate-100 p-3.5"><div class="text-[10px] font-bold uppercase tracking-wider text-indigo-600 mb-1">Why this fits</div><p class="text-xs leading-5 text-slate-700">${escapeHtml(a.why_it_fits||'Relevant to your selected skills.')}</p></div>
+      <div class="mt-auto pt-5 flex items-center justify-between gap-3"><span class="text-[10px] text-slate-400 flex items-center gap-1"><i data-lucide="message-circle" class="w-3 h-3"></i> ${Number(x.comments||0)} comments</span><button class="focus-ring btn-primary rounded-lg px-4 py-2.5 text-xs font-bold flex items-center gap-2" onclick="openDeepDive(${i})">Deep dive <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i></button></div>
+    </article>`;
+  }).join('');
+  icons();
+}
+async function runSearch(curated=false){
+  $('findBtn').disabled=true;$('curatedBtn').disabled=true;$('findBtn').classList.add('opacity-60');$('resultMeta').textContent=curated?'Loading curated examples…':'Gemma is reading issues and preparing your next steps…';$('notice').classList.add('hidden');skeletons();
+  try{
+    const res=await fetch('/api/search',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({skills:[...selectedSkills],level:$('level').value,curated})});
+    const data=await res.json();
+    if(!res.ok)throw new Error(data.error||'Search failed. Please retry.');
+    $('scanned').textContent=Number(data.scanned||0).toLocaleString();$('filtered').textContent=Number(data.filtered||0).toLocaleString();$('highMatch').textContent=Number(data.high_match||0).toLocaleString();
+    $('resultMeta').textContent=`${data.issues.length} issue${data.issues.length===1?'':'s'} · ${data.source==='curated'?'Curated demo dataset':'Live GitHub API'} · ${data.latency_ms} ms`;
+    if(data.message)showNotice(data.message);
+    renderIssues(data.issues);
+  }catch(err){$('issuesGrid').innerHTML='<div class="card rounded-2xl p-8 text-center lg:col-span-2"><p class="font-bold text-slate-800">Could not load issues</p><p class="text-sm text-slate-500 mt-1">Use the curated demo dataset to keep exploring.</p></div>';showNotice(err.message+' Select “Load Curated Live Dataset” for a reliable demo fallback.','error');$('resultMeta').textContent='Search unavailable'}
+  finally{$('findBtn').disabled=false;$('curatedBtn').disabled=false;$('findBtn').classList.remove('opacity-60');icons()}
+}
+$('findBtn').addEventListener('click',()=>runSearch(false));$('curatedBtn').addEventListener('click',()=>runSearch(true));
+
+function openDeepDive(index){
+  const x=currentIssues[index];if(!x)return;const a=x.analysis||{};
+  const repoUrl=x.html_url.replace(/\/issues\/\d+\/?$/,'');
+  const branch=`contrib/issue-${x.number}-starter`;
+  const clone=`git clone https://github.com/${x.repository}.git\ncd ${x.repository.split('/').pop()}\ngit checkout -b ${branch}`;
+  $('drawerContent').innerHTML=`
+    <div class="text-[11px] font-semibold text-slate-400 mb-2">${escapeHtml(x.repository)} · Issue #${escapeHtml(x.number)}</div>
+    <h2 class="display text-2xl leading-tight font-extrabold text-slate-900">${escapeHtml(x.title)}</h2>
+    <div class="flex flex-wrap items-center gap-2 mt-4"><span class="rounded-full px-3 py-1 text-xs font-bold ${scoreStyle(Number(a.match_score||0))}">${Number(a.match_score||0)}% match</span><span class="text-xs text-slate-500">${x.source==='curated'?'Demo fixture — verify current status on GitHub':'GitHub issue status verified at search time'}</span></div>
+    <section class="mt-7"><h3 class="font-bold text-slate-900 flex items-center gap-2"><i data-lucide="book-open" class="w-4 h-4 text-indigo-600"></i> In plain English</h3><p class="text-sm leading-6 text-slate-600 mt-2">${escapeHtml(a.jargon_buster||x.body)}</p></section>
+    <section class="mt-6"><h3 class="font-bold text-slate-900 flex items-center gap-2"><i data-lucide="lightbulb" class="w-4 h-4 text-indigo-600"></i> Why your skills fit</h3><p class="text-sm leading-6 text-slate-600 mt-2">${escapeHtml(a.why_it_fits||'This issue overlaps with your selected skills.')}</p></section>
+    <section class="mt-6"><h3 class="font-bold text-slate-900 flex items-center gap-2"><i data-lucide="list-ordered" class="w-4 h-4 text-indigo-600"></i> Your first 3 steps</h3><ol class="mt-3 space-y-3">${(a.first_3_steps||[]).slice(0,3).map((s,i)=>`<li class="flex gap-3 text-sm text-slate-600"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-50 text-indigo-700 text-xs font-bold grid place-items-center">${i+1}</span><span class="leading-6">${escapeHtml(s)}</span></li>`).join('')}</ol></section>
+    <section class="mt-7"><div class="flex items-center justify-between mb-2"><h3 class="font-bold text-slate-900 flex items-center gap-2"><i data-lucide="terminal" class="w-4 h-4 text-indigo-600"></i> PR starter commands</h3><button id="copyCommands" class="text-xs font-bold text-indigo-600 hover:text-indigo-800">Copy commands</button></div><pre class="whitespace-pre-wrap break-all rounded-xl bg-slate-900 text-slate-100 p-4 text-xs leading-6 overflow-x-auto">${escapeHtml(clone)}</pre><p class="text-[11px] text-slate-400 mt-2">Check the repository's contribution guide and default branch before pushing.</p></section>
+    <section class="mt-7"><h3 class="font-bold text-slate-900 flex items-center gap-2"><i data-lucide="list-checks" class="w-4 h-4 text-indigo-600"></i> Starter checklist</h3><div class="mt-3 space-y-3 text-sm text-slate-600">${['Read CONTRIBUTING.md and the project README.','Check recent activity and confirm the issue is still available.','Set up the project and run its existing tests.','Create a focused change and add or update a test.','Run formatting and tests; inspect your final diff.','Open a pull request that links this issue.'].map((s,i)=>`<label class="flex items-start gap-3"><input type="checkbox" class="mt-1 accent-indigo-600 w-4 h-4"><span>${s}</span></label>`).join('')}</div></section>
+    <a href="${escapeHtml(x.html_url)}" target="_blank" rel="noreferrer" class="btn-primary mt-8 w-full rounded-xl py-3.5 flex items-center justify-center gap-2 text-sm font-bold">Open issue on GitHub <i data-lucide="external-link" class="w-4 h-4"></i></a>
+  `;
+  $('overlay').classList.add('open');$('drawer').classList.add('open');$('drawer').setAttribute('aria-hidden','false');document.body.style.overflow='hidden';icons();
+  $('copyCommands').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(clone);$('copyCommands').textContent='Copied!'}catch(e){$('copyCommands').textContent='Copy unavailable'}});
+}
+function closeDrawer(){$('overlay').classList.remove('open');$('drawer').classList.remove('open');$('drawer').setAttribute('aria-hidden','true');document.body.style.overflow=''}
+$('closeDrawer').addEventListener('click',closeDrawer);$('overlay').addEventListener('click',closeDrawer);document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});
+async function checkStatus(){
+  try{const r=await fetch('/api/status');const d=await r.json();$('statusDot').className='w-2 h-2 rounded-full '+(d.connected?'bg-emerald-500 animate-pulse':'bg-amber-500');$('statusText').textContent=d.connected?(d.model_present?'Ollama online · model ready':'Ollama online · model not found'):'Ollama offline · fallback mode';$('latency').textContent=d.latency_ms+' ms'}
+  catch(e){$('statusDot').className='w-2 h-2 rounded-full bg-amber-500';$('statusText').textContent='Status unavailable'}
+}
+checkStatus();setInterval(checkStatus,12000);icons();
+</script>
+</body>
+</html>
