@@ -1,0 +1,15 @@
+Question titel: The Missing Project Credentials  
+
+Question link:
+https://my.newtonschool.co/playground/code/7x83ezx6nimm
+
+
+Solution:
+
+grep -r "DB_PASSWORD"
+cat EventApp/config/.env > EventApp/db_password.txt
+
+Approch:
+
+we ues grep -r for find all hidden password  db_password
+than we ues cat for append the all contant in EventApp/db_password.txt

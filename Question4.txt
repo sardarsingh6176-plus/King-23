@@ -1,0 +1,18 @@
+Question title: Deployment Project Permissions
+
+Question link:
+https://my.newtonschool.co/playground/code/3wz3wv7c89fo?lecture_hash=vifkrugjcwth
+
+Solution:
+ 
+ls
+chmod 700 deployment/app/server.py 
+chmod 700 deployment/app/handler.py
+chmod 700 deployment/app/settings.py
+chmod 770 deployment/datasets
+chmod 770 deployment/datasets/train.csv 
+chmod 770 deployment/datasets/test.csv
+chmod 644 deployment/docs/OVERVIEW.md
+chmod 755 deployment/bin/start.sh 
+chmod 755 deployment/bin/stop.sh
+chmod 755 deployment/bin/healthcheck.sh

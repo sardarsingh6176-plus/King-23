@@ -1,0 +1,29 @@
+Question titel: Build Pipeline Directory Tree     
+
+Question link: https://my.newtonschool.co/playground/code/r2ui5gw5lhqt?lecture_hash=n9ynhcuvkld8
+
+
+
+Solution:
+
+mkdir pipeline
+cd pipeline
+mkdir stages
+mkdir env
+mkdir artifacts
+chmod 750 stages
+chmod 770 artifacts
+chmod 700 env
+cd stages
+mkdir build
+touch build/app.py build/config.json build/NOTES.md
+echo "Build stage initialized." > build/NOTES.md
+mkdir test
+mkdir test/unit
+mkdir test/unit/integration
+cd ..
+mkdir env/staging
+mkdir env/prod
+mkdir artifacts/old/
+touch artifacts/old/build.log artifacts/old/test.log artifacts/old/deploy.log
+chmod 640 artifacts/old/build.log artifacts/old/test.log artifacts/old/deploy.log

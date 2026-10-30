@@ -1,0 +1,23 @@
+Question title: Execute a Python Script Directly
+
+Question link:
+https://my.newtonschool.co/playground/code/mepmefz373b4?lecture_hash=t5qc0u6ap8tg
+
+Solution:
+
+echo '#!/usr/bin/env python3' > hello.py
+echo 'print("Hello from Python")'  >> hello.py
+chmod +x hello.py
+./hello.py
+
+Approch:
+
+first i run this directly but failed    echo 'print("Hello from Python")'  >> hello.py
+                                        chmod +x hello.py
+                                        ./hello.py
+than i understand i need to define
+path of python3 inside the file.
+than i run first                        echo '#!/usr/bin/env python3' > hello.py
+                                        echo 'print("Hello from Python")'  >> hello.py
+                                        chmod +x hello.py
+                                        ./hello.py

@@ -1,0 +1,20 @@
+Question title: Data Breach Response
+
+Question link:
+ https://my.newtonschool.co/playground/code/orlr84xpc3oo?lecture_hash=vifkrugjcwth
+
+Solution:
+
+cd breach_response
+chmod +w evidence
+cp evidence/log_dump.txt .
+mv evidence secure
+chmod -w secure/evidence
+chmod +w reports/incident_summary.txt
+echo "Breach confirmed" >> reports/incident_summary.txt
+chmod -w reports/incident_summary.txt
+echo "Forensics Complete" > secure/forensics_report.txt
+chmod 600 secure/forensics_report.txt
+chmod +w reports/incident_summary.txt
+echo "Escalated to security team" >> reports/incident_summary.txt
+chmod -w reports/incident_summary.txt
