@@ -1,0 +1,33 @@
+Question Title: Advance file manegment
+
+Question link:
+https://my.newtonschool.co/playground/code/4ks5o139cfoh?lecture_hash=v210chxjexei
+
+Solutin:
+None 
+ 1   # your code goes here
+ 2   pwd 
+ 3   ls
+ 4   mkdir project-files
+ 5   cd project-files
+ 6   touch report.docx summary.docx draft.docx
+ 7   cp report.docx report_backup.docx
+ 8   mkdir old
+ 9   mv draft.docx old
+ 10  mv summary.docx final_summary.docx
+ 11  cp final_summary.docx old
+ 12  rm report_backup.docx
+
+ Approch:
+
+ 1 first i checkout current position "pwd"
+ 2 i check what we ar given by "ls"
+3 i make folder by "mkdir"
+4 i enter i folder by "cd"
+5 than i creat file by "touch"
+6 than i ues cp for copy by "cp"
+7 than again ues "mkdir"
+8 i moov file by "mv"
+9 again i moov file by "mv"
+10 agind i copy file by "cp"
+11 last one i ues "rm"

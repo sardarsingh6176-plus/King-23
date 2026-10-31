@@ -1,0 +1,21 @@
+Question title:  Simplify the Compilation Process
+
+Question link:
+https://my.newtonschool.co/playground/code/9kh4giios2j4?lecture_hash=t5qc0u6ap8tg
+
+
+Solution:
+
+touch build.sh
+echo "gcc hello.c -o hello" > build.sh
+chmod +x build.sh
+./build.sh
+./hello
+
+Approch:
+
+first i make script build.sh by touch build.sh
+than i append "gcc hello.c -o hello" in build.sh
+than Permissions
+than call the script ./build.sh
+                     ./hello
