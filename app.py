@@ -326,3 +326,4 @@ STATIC PRE-SCAN FLAGS:
 {static_summary}
 
 CODE DIFF TO REVIEW:
+{diff_text}"""
